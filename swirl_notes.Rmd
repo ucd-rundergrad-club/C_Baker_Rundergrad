@@ -1,0 +1,336 @@
+---
+title: "Swirl Notes"
+author: "Cassandra"
+date: "July 10, 2019"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+library(swirl)
+library(tidyverse)
+# name = calbaker
+```
+
+Use `bye()` to exit swirl and save progress.   
+Use `info()` to display options for swirl.
+
+## R Programming
+
+### 1. Basic Building Blocks
+
+Values can be assigned into variables and stored for later use. 
+```{r}
+x <- 5 + 7
+x
+```
+
+Vectors of numbers can also be stored in R.
+```{r}
+z <- c(1.1, 9, 3.14)
+z
+```
+
+Vectors can then be combined into new vectors or used for calculations.
+```{r}
+c(z, 555, z)
+z*2 + 100
+```
+
+Common operators  
+
+* `+` = addition  
+* `-` = subtraction  
+* `*` = multiplication  
+* `/` = division  
+* `^` = exponents  
+* `sqrt()` = square root  
+* `abs()` = absolute value   
+
+**Note:** When working with vectors, R will perform operations element by element. If two vectors are different lengths though, R will recycle the shorter vector. 
+```{r}
+long <- c(1, 2, 3, 4)
+short <- c(0, 10)
+
+long + short
+```
+
+### 3. Sequences of Numbers
+
+Creating a basic sequence of numbers: 
+```{r}
+1:20 
+seq(1, 20)
+```
+
+`seq` can also specify increments other than the default of 1.
+```{r}
+seq(0, 10, by = 0.5)
+```
+
+Make a sequence of a certain length:
+```{r}
+my_seq <- seq(5, 10, length = 30)
+length(my_seq)
+```
+
+Make a sequence the length of another vector:
+```{r}
+1:length(my_seq)
+seq(along.with = my_seq)
+seq_along(my_seq)
+```
+
+create vectors using `rep()`: 
+```{r}
+# repeat something in order a specific number of times
+rep(0, times = 40)
+rep(c(0, 1, 2), times = 10)
+
+# repeat each thing a specific number of times
+rep(c(0, 1, 2), each = 10)
+```
+
+### 4. Vectors
+
+Atomic vectors contain one data type while lists may contain multiple data types.
+```{r}
+num_vect <- c(0.5, 55, -10, 6)
+(tf <- num_vect < 1)
+```
+
+Logical operators
+
+* `<` = less than
+* `>` = greater than
+* `<=` = less than or equal to
+* `>=` = greater than or equal to
+* `==` = equal to 
+* `!=` = not equal to 
+* `|` = or
+* `&` = and
+* `!` = not 
+
+Use `"` to notate characters.
+```{r}
+my_char <- c("My", "name", "is")
+```
+
+Vectors can also be collapsed or manipulated later.
+```{r}
+# combine multiple vector elements into one element
+paste(my_char, collapse = " ")
+
+# add a new element to the original vector
+my_name <- c(my_char, "calbaker")
+# and combine again 
+paste(my_name, collapse = " ")
+```
+
+Use `paste` to join multiple vectors together. Recycling will occur here as well.
+```{r}
+paste(1:3, c("X", "Y", "Z"), sep = "")
+paste(LETTERS, 1:4, sep = "-")
+```
+
+### 5. Missing Values 
+
+`NA` represents missing or unavailable values. Operations involving `NA` will typically return `NA`. 
+```{r}
+x <- c(44, NA, 5, NA)
+x*3
+```
+
+Additional practice with `NA`:
+```{r}
+# draw 1000 numbers from normal distribution
+y <- rnorm(1000)
+# make vector containing 1000 NAs
+z <- rep(NA, 1000)
+# randomly select 100 elements from the two vectors above
+my_data <- sample(c(y, z), 100)
+
+# where are the NA values?
+(my_na <- is.na(my_data))
+# how many NA values?
+sum(my_na)
+```
+
+`NaN` is another notation in R that stands for 'not a number'. 
+```{r}
+0/0
+```
+
+### 6. Subsetting Vectors
+
+Useful for only looking at specific elements of a vector. 
+```{r}
+x <- sample(c(y, z), 20)
+
+# look at first ten elements of x
+x[1:10]
+
+# only select elements that aren't NA
+y <- x[!is.na(x)]
+y
+```
+
+Subsetting can be performed to fit multiple criteria at once. 
+```{r}
+# subset for values that are positive and not NA
+x[!is.na(x) & x > 0]
+
+# pull out specific elements from a vector
+x[c(3, 5, 7)]
+
+# exclude specific elements from a vector
+x[c(-2, -10)]
+x[-c(2, 10)]
+```
+
+Elements within vectors can be named.
+```{r}
+# create vector with names
+vect <- c(foo = 11, bar = 2, norf = NA)
+vect
+# see the names of a vector
+names(vect)
+
+# or you can add names later
+# first create vector without names
+vect2 <- c(11, 2, NA)
+# then add names
+names(vect2) <- c("foo", "bar", "norf")
+
+# same vector? 
+identical(vect, vect2)
+
+# subset using names
+vect[c("foo", "bar")]
+```
+
+### 7. Matrices and Data Frames
+
+Matrices can only have one data class while data frames can have many different data classes. 
+
+Matrices can be created from vectors.
+```{r}
+# create initial vector
+my_vector <- 1:20
+dim(my_vector)
+
+# change dimensions of vector 
+dim(my_vector) <- c(4, 5)
+# check new dimensions
+dim(my_vector)
+attributes(my_vector)
+
+# this is now a matrix
+class(my_vector)
+my_matrix <- my_vector
+```
+
+`matrix()` can also be used to create matrices.
+```{r}
+my_matrix2 <- matrix(1:20, 4, 5)
+identical(my_matrix, my_matrix2)
+```
+
+Additional information can be added to matrices later.
+```{r}
+# create name vector
+patients <- c("Bill", "Gina", "Kelly", "Sean")
+
+# combine name vector with information in matrix
+cbind(patients, my_matrix)
+```
+**Note:** Since matrices can only have one class of data, R coerced the numbers into characters when the character vector was combined with the matrix.
+
+Data frames must be used when there are multiple data classes involved.
+```{r}
+# combine name vector and matrix information into data frame
+# make the data frame
+my_data <- data.frame(patients, my_matrix)
+my_data
+# check that this is a data frame
+class(my_data)
+```
+
+Additional information can also be added to data frames later.
+```{r}
+# create a vector of column names
+cnames <- c("patient", "age", "weight", "bp", "rating", "test")
+
+# assign the column names to the data frame
+colnames(my_data) <- cnames
+my_data
+```
+
+### 8. Logic 
+
+Logical expressions evaluate to `TRUE` or `FALSE`.   
+Remember the logical operators from section 4 above. 
+```{r}
+TRUE == TRUE 
+6 < 7
+10 <= 10
+5 != 7
+```
+
+These expressions can also be nested together to get an overall answer.
+```{r}
+(FALSE == TRUE) == FALSE
+```
+
+Using `!` means 'not' and will reverse the answer. 
+```{r}
+!(5 == 7)
+```
+
+For 'and' statements, use `&` to evaluate across an entire vector and `&&` to only evaluate the first element of a vector.
+```{r}
+TRUE & c(TRUE, FALSE, FALSE) 
+TRUE && c(TRUE, FALSE, FALSE)
+```
+
+Similarly, `|` evaluates 'or' across an entire vector and `||` evalutes 'or' for only the first element of a vector.
+```{r}
+FALSE | c(TRUE, FALSE, FALSE)
+FALSE || c(TRUE, FALSE, FALSE)
+```
+
+### 12. Looking at Data
+
+R has many functions to help you get a sense of your data.
+```{r}
+# look at dimensions (rows then columns)
+dim(mpg)
+
+# number of rows
+nrow(mpg)
+# number of columns
+ncol(mpg)
+
+# look at variable names
+names(mpg)
+
+# preview the first few rows of data (6 by default)
+head(mpg)
+# look at the last ten rows of data
+tail(mpg, 10)
+```
+
+`summary` is good for getting an overview of the data.
+```{r}
+summary(mpg)
+
+# to look at categorical variables that were cut off 
+table(mpg$class)
+```
+
+`str` also provides a concise view of the data structure.
+```{r}
+str(mpg)
+```
+
