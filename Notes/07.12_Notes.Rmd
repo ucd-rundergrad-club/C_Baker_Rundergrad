@@ -2,7 +2,9 @@
 title: "07.12 Meeting Notes"
 author: "Cassandra"
 date: "July 12, 2019"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, message = FALSE}
@@ -12,3 +14,14 @@ library(tidyverse)
 ##Test header
 
 ## Header
+
+**Tips:**   
+`Ctrl` + `Alt` + `i` to make new code chunk. 
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(displ, hwy))
+```
+
+
+
