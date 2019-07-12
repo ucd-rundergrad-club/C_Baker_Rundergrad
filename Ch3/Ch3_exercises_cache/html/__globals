@@ -1,0 +1,26 @@
+setup	library	tidyverse
+unnamed-chunk-2	ggplot	mpg
+unnamed-chunk-3	nrow	mpg	ncol
+unnamed-chunk-4	ggplot	mpg	geom_point	aes	hwy	cyl
+unnamed-chunk-5	ggplot	mpg	geom_point	aes	class	drv
+unnamed-chunk-6	ggplot	mpg	geom_point	aes	displ	hwy
+unnamed-chunk-7	ggplot	mpg	geom_point	aes	displ	hwy
+unnamed-chunk-8	str	mpg
+unnamed-chunk-9	ggplot	mpg	geom_point	aes	displ	hwy	cty
+unnamed-chunk-10	ggplot	mpg	geom_point	aes	displ	hwy	cty
+unnamed-chunk-11	ggplot	mpg	geom_point	aes	displ	hwy
+unnamed-chunk-12	ggplot	mpg	geom_point	aes	displ	hwy
+unnamed-chunk-13	ggplot	mpg	geom_point	aes	displ	hwy	facet_wrap	cty
+unnamed-chunk-14	ggplot	mpg	geom_point	aes	drv	cyl	displ	hwy	facet_grid
+unnamed-chunk-15	ggplot	mpg	geom_point	aes	displ	hwy	facet_grid	drv	.	cyl
+unnamed-chunk-16	ggplot	mpg	geom_point	aes	displ	hwy	facet_wrap	class
+unnamed-chunk-17	ggplot	mpg	geom_point	aes	displ	hwy	facet_wrap	cyl
+unnamed-chunk-18	ggplot	mpg	geom_point	aes	displ	hwy	facet_grid	drv	class
+unnamed-chunk-19	ggplot	mpg	aes	displ	hwy	drv	geom_point	geom_smooth
+unnamed-chunk-20	ggplot	mpg	geom_smooth	aes	displ	hwy	drv
+unnamed-chunk-21	ggplot	mpg	geom_smooth	aes	displ	hwy	drv
+unnamed-chunk-22	ggplot	mpg	aes	displ	hwy	geom_point	geom_smooth
+unnamed-chunk-23	ggplot	mpg	aes	displ	hwy	geom_point	geom_smooth	drv
+unnamed-chunk-24	ggplot	mpg	aes	displ	hwy	drv	geom_point	geom_smooth
+unnamed-chunk-25	ggplot	mpg	aes	displ	hwy	geom_point	drv	geom_smooth
+unnamed-chunk-26	ggplot	mpg	aes	displ	hwy	geom_point	drv
