@@ -1,0 +1,48 @@
+---
+title: "07.19 Meeting Notes"
+author: "Cassandra"
+date: "July 19, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(nycflights13)
+```
+
+**Question: Do you need to assign a header in R when you upload your data?**   
+Generally, when you upload a .csv file R will read in the first row as headers. You can use `read.csv()` to upload .csv files and if you want to make sure R uses the first row as a header, use `header = TRUE`.   
+```
+data <- read.csv("file_name.csv",  header = TRUE)
+```
+## Data Transformation 
+
+**Shortcut:** Use `Ctrl` + `Shift` + `M` to generate the pipe symbol ` %>% `. 
+
+**Keep track of missing values**   
+When you start working with a dataset, it's always helpful to get a sense of the data. Are there missing values? If so, consider removing them for ease of use. It is important to first think about if the missing values mean something though and still need to be included in the data/analyses in some way.   
+For example, say you're measuring hypocotyl length in multiple genotypes and comparing plant growth in these genotypes. You might not have length data for all plants because perhaps some died before your measurement. However, these missing values may also be related to plant growth by genotype, so you'd want to consider whether or not you can safely remove those missing values.   
+
+**`filter()` vs `select()`**   
+Use `filter()` for rows.   
+Use `select()` for columns.  
+
+**The pipe is great for linking functions together**   
+Use the pipe when you want R to do sequential functions on the same object. In other words, carry forward the result of one command into the next command after the pipe.   
+```{r}
+flights %>% 
+  group_by(carrier) %>%  
+  summarize(ave_delay = mean(dep_delay, na.rm = TRUE),
+            n = n()) %>% 
+  filter(n >= 10000) %>% 
+  arrange(desc(ave_delay))
+```
+
+You can even use the pipe to manipulate your data before feeding it into `ggplot()`. Use ` %>% ` to link functions together, then use `+` to add layers to your plot. 
+```{r}
+filter(mpg, cyl >= 6) %>% 
+  ggplot(aes(displ, hwy)) + 
+  geom_point(aes(color = as.factor(cyl)))
+```
+
+
